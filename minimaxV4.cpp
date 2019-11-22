@@ -283,23 +283,29 @@ public:
 
         int columnDirection =0, rowDirection=0;
         if(mr==cr+1){//if the approved move wants to move into a king postion
+            cout << "first if\n";
             if(mc==cc+1 || mc==cc-1){
 
                 if(mr==7){
                     newState[mc][mr]=4;//king that spot
+                    removePiece(newState,cc,cr);//remove the pawn
+                }else{
+                movePiece(newState, cc, cr, mc, mr);//moves the piece, this move is already valid,otherwise the funciton would not have run
                 }
-                removePiece(newState,cc,cr);//remove the pawn
             }
-        }
-        else if(mr==cr-1){//if the approved move wants to move into a king postion
+        } else if(mr==cr-1){//if the approved move wants to move into a king postion
+            cout << "second if\n";
             if(mc==cc+1 || mc==cc-1){
                 if(mr==0){
                     newState[mc][mr]=3;//king that spot
+                    removePiece(newState,cc,cr);//remove the pawn
+                }else{
+                movePiece(newState, cc, cr, mc, mr);//moves the piece, this move is already valid,otherwise the funciton would not have run
                 }
-                removePiece(newState,cc,cr);//remove the pawn
+                
             }
-        }
-        else{//move the piece normally
+        } else {//move the piece normally
+            cout << "else\n";
             if(abs(mc-cc)==2 && abs(mr-cr)==2){//if a 5x5 jump move is requested
                     columnDirection=mc-cc;//determine the move direction as positive or negative
                         if(columnDirection>0){
@@ -325,9 +331,9 @@ public:
                         removePiece(newState, cc+columnDirection, cr+rowDirection);//removes that piece
                         //the attacking piece is actually moved below
                     }
-                movePiece(newState, cc, cr, mc, mr);//moves the piece, this move is already valid,otherwise the funciton would not have run
+                
                 }
-            
+            movePiece(newState, cc, cr, mc, mr);//moves the piece, this move is already valid,otherwise the funciton would not have run
         }
          
         /*cout << "After movePiece\n";
@@ -622,9 +628,9 @@ int main(void) {
     {1,0,1,0,1,0,1,0}};
     
     Node f(4,0,board);
-    f.project(f.place,board,f.isMax);
-    printBoard(f,0);
-    //cout << minimax(f,f.childIndex,-10001,10001) << "\n";
+    //f.project(f.place,board,f.isMax);
+    //printBoard(f,0);
+    cout << minimax(f,f.childIndex,-10001,10001) << "\n";
     return 0;
 }
 
