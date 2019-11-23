@@ -346,13 +346,16 @@ public:
 
     }
 
-    void findNext(int *position, int currentState[8][8], int turn){
+    int findNext(int *position, int currentState[8][8], int turn){
+
       int i=0, j=0, finishing=1, cut=0;
         cout<<"Starting at "<< position[0]<< " " << position[1]<<"\n";
       if(position[0]>=7 && position[1]>=7){//if the position is currently on the very last piece of the board, do nothing at all in the projection state
          cout<<"Reached the end of the board\n";
-          return;
-
+          return 0;
+      }
+      else{
+        childIndex++;
       }
       for(i=position[0];i<8 && cut!=1;i++){
         if(finishing==1){//you must continue searching the current row the first time through
@@ -430,7 +433,12 @@ public:
         finishing=0;//after one iteration of the column check loop, it must have finished the current column so never begin j from 0;
       }
 
+      position[0]++;
+      position[1]++;
+
       cout<<"Position is now "<< position[0]<< " " << position[1]<<"\n";
+
+      return 1;
     }
 
     void project(int *position, int currentState[8][8], int turn) {
@@ -457,10 +465,13 @@ public:
         */
 
         while (births == 0) {
-            findNext(position, currentState, turn);
-            action[0]=position[0];
-            action[1]=position[1];
-
+            if(findNext(position, currentState, turn)==1){
+                action[0]=position[0];
+                action[1]=position[1];
+            }
+            else{
+                break;
+            }
             if(currentState[position[0]][position[1]]!=0){
                 for(i=0;i<8;i++){//tests each of the 9 possible moves
                     switch(i){
@@ -577,10 +588,11 @@ float minimax(Node node, int childNum, float alpha, float beta) { //childNum kee
         int upper = node.children.size();
         for (int i = 0; i < upper || start == 1; i++) { //terminating cond should be i < node.children.size()
         start = 0;
-            upper = node.children.size();
-            node.project(node.place, node.boardState, node.isMax);
 
-            node.value = max(node.value, minimax(node.children[i],i,alpha,beta));
+            node.project(node.place, node.boardState, node.isMax);
+            upper = node.children.size();
+
+            node.value = max(node.value, minimax(node.children[node.childIndex],node.childIndex,alpha,beta));
             alpha = max(alpha, node.value);
             if (alpha >= beta) {
                 cout << "Pruned cause isMax is guaranteed " << alpha << " and isMin is guaranteed " << beta << "\n";
@@ -596,13 +608,14 @@ float minimax(Node node, int childNum, float alpha, float beta) { //childNum kee
         int start = 1;
         int upper = node.children.size();
         for (int i = 0; i < upper || start == 1; i++) { // i < node.children.size()
-            upper = node.children.size();
+
             start = 0;
 
             node.project(node.place, node.boardState, node.isMax);
+            upper = node.children.size();
 
             int oldV = node.value;
-            node.value = min(node.value, minimax(node.children[i],i,alpha,beta));
+            node.value = min(node.value, minimax(node.children[node.childIndex],node.childIndex,alpha,beta));
             if (oldV != node.value) node.childIndex++;
             beta = min(beta, node.value);
 
