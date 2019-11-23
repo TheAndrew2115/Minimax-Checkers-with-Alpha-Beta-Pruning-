@@ -346,13 +346,13 @@ public:
 
     }
 
-    int findNext(int *position, int currentState[8][8], int turn){
+    void findNext(int *position, int currentState[8][8], int turn){
 
       int i=0, j=0, finishing=1, cut=0;
         cout<<"Starting at "<< position[0]<< " " << position[1]<<"\n";
       if(position[0]>=7 && position[1]>=7){//if the position is currently on the very last piece of the board, do nothing at all in the projection state
          cout<<"Reached the end of the board\n";
-          return 0;
+          return ;
       }
       else{
         childIndex++;
@@ -438,7 +438,7 @@ public:
 
       cout<<"Position is now "<< position[0]<< " " << position[1]<<"\n";
 
-      return 1;
+
     }
 
     void project(int *position, int currentState[8][8], int turn) {
@@ -465,13 +465,11 @@ public:
         */
 
         while (births == 0) {
-            if(findNext(position, currentState, turn)==1){
+            findNext(position, currentState, turn);
                 action[0]=position[0];
                 action[1]=position[1];
-            }
-            else{
-                break;
-            }
+
+
             if(currentState[position[0]][position[1]]!=0){
                 for(i=0;i<8;i++){//tests each of the 9 possible moves
                     switch(i){
@@ -539,8 +537,9 @@ public:
                         } cout << "\n";*/
 
                         //CALL GET BOARD
-                        getBoard(childBoard);
 
+                        getBoard(childBoard);
+                            cout<<"child created\n";
                         for (int i = 0; i < 8; i++) {
                             delete [] childBoard[i];
                         }
