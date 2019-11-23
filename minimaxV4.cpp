@@ -352,24 +352,17 @@ public:
         cout<<"Starting at "<< position[0]<< " " << position[1]<<"\n";
       if(position[0]>=7 && position[1]>=7){//if the position is currently on the very last piece of the board, do nothing at all in the projection state
          cout<<"Reached the end of the board\n";
-<<<<<<< Updated upstream
           return 0;
       }
       else{
         childIndex++;
-=======
-          return;
-
-      } else {
-          childIndex++;
->>>>>>> Stashed changes
       }
       for(i=position[0];i<8 && cut!=1;i++){
         if(finishing==1){//you must continue searching the current row the first time through
             cout<<"Now finishing\n";
 
             if(position[0]==0 && position[1]==0){//if its starting from the very first spot dont increment j before starting
-                cout<<"Starting at index 0 0\n";
+                cout<<"Starting at index 00\n";
                 for(j=position[1];j<8 && cut!=1; j++){
                     if(currentState[i][j]!=0){//finds a non empty square
                         if(currentState[i][j]==1 || currentState[i][j]==3){//it belongs to the player
@@ -439,8 +432,6 @@ public:
         }
         finishing=0;//after one iteration of the column check loop, it must have finished the current column so never begin j from 0;
       }
-        position[0]++;
-        position[1]++;
 
       position[0]++;
       position[1]++;
@@ -597,18 +588,10 @@ float minimax(Node node, int childNum, float alpha, float beta) { //childNum kee
         int upper = node.children.size();
         for (int i = 0; i < upper || start == 1; i++) { //terminating cond should be i < node.children.size()
         start = 0;
-<<<<<<< Updated upstream
 
             node.project(node.place, node.boardState, node.isMax);
             upper = node.children.size();
 
-=======
-            
-            node.project(node.place, node.boardState, node.isMax);
-            upper = node.children.size();
-            cout<<upper<<"\n";
-            
->>>>>>> Stashed changes
             node.value = max(node.value, minimax(node.children[node.childIndex],node.childIndex,alpha,beta));
             alpha = max(alpha, node.value);
             if (alpha >= beta) {
@@ -625,22 +608,12 @@ float minimax(Node node, int childNum, float alpha, float beta) { //childNum kee
         int start = 1;
         int upper = node.children.size();
         for (int i = 0; i < upper || start == 1; i++) { // i < node.children.size()
-<<<<<<< Updated upstream
 
-=======
-            
->>>>>>> Stashed changes
             start = 0;
 
             node.project(node.place, node.boardState, node.isMax);
             upper = node.children.size();
-<<<<<<< Updated upstream
 
-=======
-            
-            cout<<upper<<"\n";
-            
->>>>>>> Stashed changes
             int oldV = node.value;
             node.value = min(node.value, minimax(node.children[node.childIndex],node.childIndex,alpha,beta));
             if (oldV != node.value) node.childIndex++;
