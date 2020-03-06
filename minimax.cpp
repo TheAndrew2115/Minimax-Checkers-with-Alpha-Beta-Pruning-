@@ -2,7 +2,7 @@
 //  minimaxV2.cpp
 //
 //
-//  Created by Andrew Wang on 2019-11-20.
+//  Created by Andrew Wang, Connor Byers, Nick Faria, and Nick Makharinets on 2019-11-20.
 //
 
 #include <stdio.h>
@@ -57,10 +57,7 @@ public:
         return val;
     }
 
-    void getBoard(int** board) { //dummy getBoard function
-        //NICK'S CODE
-
-        //END OF NICK'S CODE
+    void getBoard(int** board) {
         /*int board[8][8]={
         {0,2,0,2,0,2,0,2},//red side of the board initially
         {2,0,2,0,2,0,2,0},
@@ -84,7 +81,6 @@ public:
         delete child;
     }
 
-    //NICK'S CODE//
     int validMove(int *action, int currentstate[8][8], int turn ){//a version of checkmove used in the minimax that doesn't move any pieces
         int cr, cc, mr, mc;//current row, column and move row, column
         int columnDirection=0, rowDirection=0;
@@ -104,8 +100,6 @@ public:
         }
 
         //removed the check of choosing an empty square
-        //cout << "Got here\n";
-        //cout << cr <<" "<<cc <<" "<< mr << " " << mc << " " << currentstate[mr][mc] << "\n";
         if(currentstate[mr][mc]!=0){
             return -1;//this -1 return value indicates that the selected move spot is already occupied and thus the move is not valid
         }
@@ -191,10 +185,6 @@ public:
                             rowDirection=-1;
                         }
                     if(currentstate[cr+rowDirection][cc+columnDirection]==2 || currentstate[cr+rowDirection][cc+columnDirection]==4){
-                    //if the space being hopped over belongs to the opponent
-
-                        //removed the auto piece removal
-
                         return 1;
                     }
                 }
@@ -242,7 +232,7 @@ public:
 
     void movePiece(int **arr, int cc, int cr, int nc, int nr){ //gets board, current row, current column, new row, new column indices
         cout << "\nBefore\n";
-        for (int i = 0; i < 8; i++) { //Idk if we should use memcpy
+        for (int i = 0; i < 8; i++) { 
             for (int j = 0; j < 8; j++) {
                 cout << arr[i][j] << " ";
             }
@@ -252,7 +242,7 @@ public:
     arr[cr][cc]=0;
     arr[nr][nc]=piece;
         cout << "\nAfter\n";
-        for (int i = 0; i < 8; i++) { //Idk if we should use memcpy
+        for (int i = 0; i < 8; i++) { 
             for (int j = 0; j < 8; j++) {
                 cout << arr[i][j] << " ";
             }
@@ -272,14 +262,6 @@ public:
         int mr=move[3];
 
         cout << "Moving " << cc << " "<<cr << " to " << mc << " " << mr << "\n";
-
-        /*cout << "Before movePiece\n";
-        for (int i = 0; i < 8; i++) { //Idk if we should use memcpy
-            for (int j = 0; j < 8; j++) {
-                cout << newState[i][j] << " ";
-            }
-            cout << "\n";
-        }*/
 
         int columnDirection =0, rowDirection=0;
         if(mr==cr+1){//if the approved move wants to move into a king postion
@@ -335,15 +317,6 @@ public:
                 }
             movePiece(newState, cc, cr, mc, mr);//moves the piece, this move is already valid,otherwise the funciton would not have run
         }
-
-        /*cout << "After movePiece\n";
-        for (int i = 0; i < 8; i++) { //Idk if we should use memcpy
-            for (int j = 0; j < 8; j++) {
-                cout << newState[i][j] << " ";
-            }
-            cout << "\n";
-        }*/
-
     }
 
     void findNext(int *position, int currentState[8][8], int turn){
@@ -506,7 +479,7 @@ public:
 
                         births++;
                         //cout <<"Got here\n";
-                        int **childBoard = new int*[8]; //allocates the new board array on the heap ,8x8 continuous memory block
+                        int **childBoard = new int*[8]; 
                         for (int i = 0; i < 8; i++){
                             childBoard[i] = new int[8];
                         }
@@ -514,36 +487,16 @@ public:
                         //use newBoard funciton
                         for(a=0;a<8;a++){
                             for(b=0;b<8;b++){
-                                childBoard[a][b]=currentState[a][b];//copies the entire current state into this newboard
+                                childBoard[a][b]=currentState[a][b];
                             }
                         }
-
-                        /*cout <<"Before:\n";
-                        for (int i = 0; i < 8; i++) {
-                            for (int j = 0; j <8; j++) {
-                                cout << childBoard[i][j] << " ";
-                            }
-                            cout << "\n";
-                        }*/
-
                         newBoard(action, childBoard, turn);
-
-                        /*cout << "After:\n";
-                        for (int i = 0; i < 8; i++) {
-                            for (int j = 0; j <8; j++) {
-                                cout << childBoard[i][j] << " ";
-                            }
-                            cout << "\n";
-                        } cout << "\n";*/
-
-                        //CALL GET BOARD
-
                         getBoard(childBoard);
                             cout<<"child created\n";
                         for (int i = 0; i < 8; i++) {
                             delete [] childBoard[i];
                         }
-                        delete[] childBoard;//frees the pointer since its already been transfered
+                        delete[] childBoard;
                     }
                 }
             }
@@ -585,7 +538,7 @@ float minimax(Node node, int childNum, float alpha, float beta) { //childNum kee
         //for each child of node recursively max out the values
         int start = 1;
         int upper = node.children.size();
-        for (int i = 0; i < upper || start == 1; i++) { //terminating cond should be i < node.children.size()
+        for (int i = 0; i < upper || start == 1; i++) { 
         start = 0;
 
             node.project(node.place, node.boardState, node.isMax);
@@ -636,7 +589,7 @@ float minimax(Node node, int childNum, float alpha, float beta) { //childNum kee
 }
 
 
-
+//we decided to include our main to help showcase how one can run this program themselves
 int main(void) {
     srand(time(NULL));
     int board[8][8]={
@@ -652,7 +605,7 @@ int main(void) {
     Node f(4,0,board);
     //f.project(f.place,board,f.isMax);
     //printBoard(f,0);
-    cout << minimax(f,f.childIndex,-10001,10001) << "\n";
+    cout << minimax(f,f.childIndex,-10001,10001) << "\n";//this minimaxes the original boardstate 4 moves ahead
     return 0;
 }
 
