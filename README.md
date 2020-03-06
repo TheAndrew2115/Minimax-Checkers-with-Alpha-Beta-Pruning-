@@ -1,6 +1,8 @@
 # Minimax-Checkers-with-Alpha-Beta-Pruning-
 Andrew Wang, Connor Byers, Nick Faria, Nick Makharinets
 
+If you want a quick background instead of reading this, here you go: https://youtu.be/pKUDCzF8uWU 
+
 Welcome to minimax checkers! For this project, we created a digital checkers board using a 32x32 LED matrix and an Arduino Mega. We first developed a player vs player gamemode by creating the basic checkers board environment on the LED matrix. Then, for the player vs computer gamemode, we developed a minimax algorithm with alpha-beta pruning in order to generate the CPU’s moves in C++. Communication between an auxiliary device, such as a laptop, and the Arduino Mega is mandatory since the Mega does not have enough memory to run the minimax algorithm.
 
 When playing on player vs computer mode, the arduino works in conjunction with the minimax algorithm written in C++ on the laptop. The choice of C++ was in part due to the previously existing C++ rule and movement code and its object oriented nature over C.  All the player interactions are still processed in the same way on the mega, after which the computer is given a signal to compute its optimal move using a Minimax algorithm with alpha beta pruning. This process is repeated every turn, appending the current gamestate as required. 
