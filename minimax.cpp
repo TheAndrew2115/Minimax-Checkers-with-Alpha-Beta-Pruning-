@@ -4,14 +4,11 @@
 //
 //  Created by Andrew Wang, Connor Byers, Nick Faria, and Nick Makharinets on 2019-11-20.
 //
-
-#include <stdio.h>
 #include <iostream>
 #include <math.h>
 #include <vector>
 #include <random>
 #include <time.h>
-#include <stdlib.h>
 using namespace std;
 
 class Node {
