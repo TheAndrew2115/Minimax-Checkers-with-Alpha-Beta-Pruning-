@@ -4,4 +4,4 @@ Welcome to minimax checkers! For this project, we created a digital checkers boa
 
 ![Image description](link-to-image) 
 
-![Board](./IMG_0500.HEIC)
+![Board](./IMG_0500.HEIC | =100x100)
